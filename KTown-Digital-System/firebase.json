@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": ["firebase.json", ".firebaserc", "firestore.rules", "README.md", "**/.*", "**/node_modules/**"],
+    "headers": [
+      { "source": "**/*.@(js|css|woff2|webp|png|jpg|svg|webmanifest)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }] },
+      { "source": "**/@(index.html|sw.js|firebase-config.js)", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }
+    ]
+  },
+  "firestore": { "rules": "firestore.rules" }
+}

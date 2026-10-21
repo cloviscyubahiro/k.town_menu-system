@@ -1,0 +1,121 @@
+/* ==========================================================================
+   K.Town — print designs: table QR cards, poster, printed menu, feedback cards
+   All sizes in millimetres. Print at 100% scale ("Actual size"), no margins.
+   ========================================================================== */
+@page { size: A4 portrait; margin: 0; }
+
+.print-root { background: #e9e4e5; min-height: 100vh; padding: 76px 0 40px; color: #000; }
+.print-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 10; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; padding: 12px 16px; background: #fff; border-bottom: 1px solid #ddd; font-family: var(--font-sans); }
+.print-bar h1 { font-size: 16px; font-weight: 500; margin-right: 8px; }
+.print-bar .muted { font-size: 13px; }
+.print-bar .grow { flex: 1; }
+.a4 { width: 210mm; height: 297mm; margin: 0 auto 24px; background: #fff; position: relative; overflow: hidden; box-shadow: 0 6px 30px rgba(0,0,0,.18); page-break-after: always; break-after: page; }
+.a4:last-child { page-break-after: auto; break-after: auto; }
+@media print {
+  html, body { background: #fff !important; }
+  .print-root { background: #fff; padding: 0; min-height: 0; }
+  .print-bar { display: none !important; }
+  .a4 { margin: 0; box-shadow: none; }
+  .toasts { display: none !important; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+
+/* ---------- Table cards: four A6 cards per A4 sheet ---------- */
+.cards4 { display: grid; grid-template-columns: 105mm 105mm; grid-template-rows: 148.5mm 148.5mm; }
+.cut { position: absolute; background: none; pointer-events: none; }
+.cut.v { left: 105mm; top: 0; bottom: 0; border-left: 0.2mm dashed #c9bfc2; }
+.cut.h { top: 148.5mm; left: 0; right: 0; border-top: 0.2mm dashed #c9bfc2; }
+.tcard { position: relative; width: 105mm; height: 148.5mm; overflow: hidden; display: flex; flex-direction: column; align-items: center; font-family: var(--font-sans); color: #000; }
+.tcard-photo { position: relative; width: 100%; height: 50mm; flex: none; overflow: hidden; background: #2a0910; }
+.tcard-photo img { width: 100%; height: 100%; object-fit: cover; }
+.tcard-photo svg.pour { position: absolute; left: 0; right: 0; bottom: -0.3mm; width: 100%; height: 7mm; }
+.tcard-photo svg.pour path { fill: #fff; }
+.tcard-photo .lock { position: absolute; left: 6mm; bottom: 9mm; display: flex; align-items: flex-end; gap: 2.4mm; }
+.tcard-photo .lock .m svg { width: 8.5mm; height: auto; display: block; filter: drop-shadow(0 0.4mm 1.2mm rgba(0,0,0,.45)); }
+.tcard-photo .lock .w svg { width: 30mm; height: auto; display: block; filter: drop-shadow(0 0.4mm 1.2mm rgba(0,0,0,.45)); }
+.tcard-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,4,8,0) 45%, rgba(20,4,8,.55) 100%); }
+.tcard-photo .lock { z-index: 1; }
+.tcard-photo svg.pour { z-index: 2; }
+.tcard-body { flex: 1; width: 100%; display: flex; flex-direction: column; align-items: center; padding: 2mm 8mm 0; text-align: center; }
+.tcard-qr { width: 50mm; height: 50mm; padding: 1.5mm; border-radius: 4mm; background: #fff; box-shadow: 0 0 0 0.35mm #ecdade; }
+.tcard-qr svg { width: 100%; height: 100%; display: block; }
+.tcard-table { margin-top: 4mm; font-weight: 300; font-size: 7.4mm; letter-spacing: .22em; text-transform: uppercase; line-height: 1; padding-left: .22em; color: #751228; }
+.tcard-cta { margin-top: 3.2mm; font-size: 3.6mm; font-weight: 500; line-height: 1.25; }
+.tcard-langs { margin-top: 1.4mm; font-size: 2.85mm; color: #5a4e52; line-height: 1.35; }
+.tcard-langs i { font-family: var(--font-serif); font-style: italic; font-size: 3.4mm; color: #3a2e31; }
+.tcard-foot { width: 100%; margin-top: auto; display: flex; justify-content: center; align-items: center; gap: 3mm; padding: 2.6mm 6mm 3.4mm; border-top: 0.25mm solid #ecdade; font-size: 2.7mm; color: #2a2023; }
+.tcard-foot b { font-weight: 600; letter-spacing: .02em; }
+.momo-chip { display: inline-flex; align-items: center; gap: 1.2mm; }
+.momo-chip span.y { display: inline-grid; place-items: center; width: 4.6mm; height: 4.6mm; border-radius: 1.2mm; background: #ffcb05; color: #000; font-size: 1.7mm; font-weight: 700; }
+
+/* ---------- Poster (A4) ---------- */
+.poster { display: flex; flex-direction: column; height: 100%; font-family: var(--font-sans); }
+.poster-photo { position: relative; height: 128mm; overflow: hidden; background: #2a0910; }
+.poster-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+.poster-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,4,8,.1) 0%, rgba(20,4,8,0) 40%, rgba(20,4,8,.6) 100%); }
+.poster-photo .lock { position: absolute; left: 16mm; bottom: 20mm; z-index: 1; display: flex; align-items: flex-end; gap: 5mm; }
+.poster-photo .lock .m svg { width: 19mm; height: auto; display: block; }
+.poster-photo .lock .w svg { width: 72mm; height: auto; display: block; }
+.poster-photo .sub { position: absolute; left: 16mm; bottom: 11mm; z-index: 1; color: rgba(255,255,255,.92); font-size: 4.6mm; letter-spacing: .02em; }
+.poster-photo svg.pour { position: absolute; left: 0; right: 0; bottom: -0.3mm; width: 100%; height: 14mm; z-index: 2; }
+.poster-photo svg.pour path { fill: #fff; }
+.poster-body { flex: 1; display: grid; grid-template-columns: 1fr 78mm; gap: 12mm; padding: 10mm 16mm 0; align-items: start; }
+.poster-body h2 { font-family: var(--font-serif); font-style: italic; font-weight: 500; font-size: 15mm; line-height: 1; letter-spacing: -.01em; }
+.poster-body .fr { font-family: var(--font-serif); font-style: italic; font-size: 6mm; color: #5a4e52; margin-top: 3mm; }
+.poster-steps { list-style: none; padding: 0; margin: 9mm 0 0; display: grid; gap: 4.4mm; counter-reset: s; }
+.poster-steps li { display: grid; grid-template-columns: 9mm 1fr; gap: 3mm; align-items: baseline; font-size: 4.6mm; line-height: 1.3; counter-increment: s; }
+.poster-steps li::before { content: counter(s); font-weight: 300; font-size: 7.6mm; color: #751228; line-height: 1; }
+.poster-steps small { display: block; font-size: 3.4mm; color: #6f6367; }
+.poster-qr { width: 78mm; height: 78mm; padding: 2mm; border-radius: 5mm; box-shadow: 0 0 0 0.5mm #ecdade; }
+.poster-qr svg { width: 100%; height: 100%; display: block; }
+.poster-qr-cap { text-align: center; margin-top: 3mm; font-size: 3.4mm; color: #5a4e52; }
+.poster-foot { margin: auto 16mm 10mm; padding-top: 5mm; border-top: 0.3mm solid #ecdade; display: flex; justify-content: space-between; gap: 6mm; font-size: 3.5mm; color: #2a2023; }
+.poster-foot b { font-weight: 600; }
+
+/* ---------- Printed menu (A4) ---------- */
+.pmenu { height: 100%; display: flex; flex-direction: column; padding: 16mm 18mm 12mm; font-family: var(--font-sans); }
+.pmenu-head { text-align: center; }
+.pmenu-head .logo svg { width: 34mm; height: auto; margin: 0 auto; display: block; }
+.pmenu-head .pm-tag { margin-top: 3mm; font-size: 3.3mm; letter-spacing: .3em; text-transform: uppercase; color: #751228; padding-left: .3em; }
+.pmenu-head .place { font-family: var(--font-serif); font-style: italic; font-size: 4.8mm; color: #3a2e31; margin-top: 1mm; }
+.pmenu-rule { width: 100%; height: 6mm; margin: 5mm 0 2mm; }
+.pmenu-rule path { fill: none; stroke: #751228; stroke-width: 1.3px; vector-effect: non-scaling-stroke; }
+.pmenu-cols { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; column-gap: 14mm; align-content: start; overflow: hidden; }
+.pmenu-col { min-width: 0; }
+.pmenu-sec { break-inside: avoid; margin-bottom: 7mm; }
+.pmenu-sec h2 { font-family: var(--font-serif); font-style: italic; font-weight: 500; font-size: 8.4mm; line-height: 1.1; color: #000; }
+.pmenu-sec .sd { font-size: 3.2mm; color: #6f6367; margin: 0.6mm 0 2.6mm; }
+.pmenu-it { break-inside: avoid; margin: 0 0 2.8mm; }
+.pmenu-row { display: flex; align-items: baseline; gap: 2mm; font-size: 3.85mm; }
+.pmenu-row .n { font-weight: 500; }
+.pmenu-row .dots { flex: 1; border-bottom: 0.35mm dotted #b9adb1; transform: translateY(-0.9mm); min-width: 6mm; }
+.pmenu-row .p { font-weight: 500; font-variant-numeric: tabular-nums; }
+.pmenu-it .d { font-size: 3.1mm; color: #6f6367; margin-top: 0.4mm; line-height: 1.35; }
+.pmenu-it .alt { font-family: var(--font-serif); font-style: italic; font-size: 3.5mm; color: #5a4e52; }
+.pmenu-foot { display: grid; grid-template-columns: auto 1fr auto; gap: 6mm; align-items: center; border-top: 0.3mm solid #ecdade; padding-top: 5mm; margin-top: 2mm; }
+.pmenu-foot .qr { width: 26mm; height: 26mm; }
+.pmenu-foot .qr svg { width: 100%; height: 100%; display: block; }
+.pmenu-foot .t { font-size: 3.3mm; line-height: 1.5; color: #2a2023; }
+.pmenu-foot .t b { font-weight: 600; font-size: 3.6mm; }
+.pmenu-foot .pay { text-align: right; font-size: 3.2mm; color: #2a2023; line-height: 1.5; }
+.pmenu-foot .pay b { display: block; font-size: 5.4mm; font-weight: 600; letter-spacing: .03em; color: #000; }
+.pmenu-note { text-align: center; font-size: 2.9mm; color: #8a7e82; margin-top: 3mm; }
+
+/* ---------- Feedback cards: four A6 per A4 ---------- */
+.fcard { width: 105mm; height: 148.5mm; padding: 9mm 9mm 7mm; display: flex; flex-direction: column; font-family: var(--font-sans); color: #000; }
+.fcard .top { display: flex; align-items: center; gap: 3mm; }
+.fcard .top .m svg { width: 7mm; height: auto; display: block; }
+.fcard .top .w svg { width: 26mm; height: auto; display: block; }
+.fcard h2 { font-family: var(--font-serif); font-style: italic; font-weight: 500; font-size: 7.4mm; margin-top: 5mm; line-height: 1.1; }
+.fcard .sub { font-size: 2.9mm; color: #6f6367; margin-top: 1mm; }
+.fcard .rate { display: flex; justify-content: space-between; margin: 4.5mm 2mm 1mm; }
+.fcard .rate span { display: grid; justify-items: center; gap: 1mm; font-size: 2.6mm; color: #6f6367; }
+.fcard .rate svg { width: 9mm; height: 11.5mm; }
+.fcard .q { font-size: 3.2mm; font-weight: 500; margin-top: 4mm; }
+.fcard .lines { margin-top: 1.5mm; }
+.fcard .lines div { height: 6.6mm; border-bottom: 0.25mm solid #d9cfd2; }
+.fcard .contact { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin-top: 4mm; font-size: 2.9mm; color: #6f6367; }
+.fcard .contact div { border-bottom: 0.25mm solid #d9cfd2; padding-bottom: 4.5mm; }
+.fcard .tick { display: flex; gap: 2mm; align-items: center; margin-top: 3.5mm; font-size: 2.9mm; color: #2a2023; }
+.fcard .tick i { width: 3.6mm; height: 3.6mm; border: 0.3mm solid #751228; border-radius: 0.8mm; flex: none; }
+.fcard .thanks { margin-top: auto; text-align: center; font-family: var(--font-serif); font-style: italic; font-size: 4.2mm; color: #751228; }

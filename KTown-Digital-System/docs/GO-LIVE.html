@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>K.Town go-live guide</title>
+<link rel="icon" href="../assets/img/icons/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <span class="mk"><img src="../assets/img/brand/ktown-mark-white.svg" alt="K.Town" width="54"></span>
+    <h1>Go live</h1>
+    <p>Connect guests’ phones, the kitchen, reception and the owner’s phone, anywhere. Free, about 30 minutes, no credit card.</p>
+  </div>
+  <svg class="pour" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0,20.6 C104,12.5 210,8 293,18 C444,36.3 571,42 908,35 C936,35.1 974,34.9 1000,34.9 L1000,60 L0,60 Z"/></svg>
+</header>
+<main class="go">
+<section>
+  <div class="wrap">
+    <h2>How it works</h2>
+    <p class="lead">The system you have is a website. In demo mode it keeps its data inside one browser. In live mode it keeps the data in <b>Firebase</b>, Google’s free database for apps, so every device sees the same orders within a second. Firebase also keeps working when the connection drops for a moment and catches up when it comes back.</p>
+    <p class="note" style="margin-top:14px">You need: a Google account, the K.Town folder, and the owner’s email address. If you plan a web address of your own (for example <code>menu.ktown.rw</code>), set it up before printing the QR cards, so you only print once.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="step-h"><span class="n">1</span><h3>Create the Firebase project</h3></div>
+    <ol>
+      <li>Go to <a href="https://console.firebase.google.com">console.firebase.google.com</a> and sign in with Google.</li>
+      <li>Create a project, name it <b>ktown-karongi</b> (any name works). Google Analytics is not needed: switch it off.</li>
+    </ol>
+
+    <div class="step-h"><span class="n">2</span><h3>Create the database</h3></div>
+    <ol>
+      <li>In the left menu: <b>Build → Firestore Database → Create database</b>.</li>
+      <li>Keep the database ID as <b>(default)</b>. Only the default database is free.</li>
+      <li>Choose a location close to Rwanda, for example <b>africa-south1 (Johannesburg)</b> or <b>europe-west1 (Belgium)</b>. It cannot be changed later.</li>
+      <li>Start in <b>production mode</b>, then Create.</li>
+    </ol>
+
+    <div class="step-h"><span class="n">3</span><h3>Turn on sign-in</h3></div>
+    <ol>
+      <li><b>Build → Authentication → Get started</b>.</li>
+      <li>Under <b>Sign-in method</b>, enable <b>Anonymous</b> (guests, no sign-up needed) and <b>Email/Password</b> (staff).</li>
+    </ol>
+
+    <div class="step-h"><span class="n">4</span><h3>Create the staff accounts</h3></div>
+    <ol>
+      <li><b>Authentication → Users → Add user</b>.</li>
+      <li>Add the <b>owner’s email</b> and a password. Then, if you like, one account for reception and one for the kitchen (any email addresses you control, for example <code>ktown.kitchen@gmail.com</code>).</li>
+    </ol>
+
+    <div class="step-h"><span class="n">5</span><h3>Add the security rules</h3></div>
+    <ol>
+      <li>Open <code>firestore.rules</code> from the K.Town folder in Notepad or VS Code.</li>
+      <li>Replace <code>owner@example.com</code> with the owner’s email, in lowercase. Keep the quotes.</li>
+      <li>Copy the whole file. In Firebase: <b>Firestore Database → Rules</b>, paste over everything, press <b>Publish</b>.</li>
+    </ol>
+    <p class="note">The rules make sure guests can only order, book, call staff and send feedback, that only staff see orders, and that only the owner can change the menu, prices, tables and settings.</p>
+
+    <div class="step-h"><span class="n">6</span><h3>Connect the K.Town system to Firebase</h3></div>
+    <ol>
+      <li>Click the gear icon, <b>Project settings → General</b>. Under <b>Your apps</b> press the web icon <b>&lt;/&gt;</b>, name it K.Town, press <b>Register app</b>.</li>
+      <li>Firebase shows a <code>firebaseConfig</code> block. Open <code>firebase-config.js</code> in the K.Town folder and replace the line <code>window.KT_FIREBASE_CONFIG = null;</code> with your values:</li>
+    </ol>
+<pre><code>window.KT_FIREBASE_CONFIG = {
+  apiKey: "AIzaSy...",
+  authDomain: "ktown-karongi.firebaseapp.com",
+  projectId: "ktown-karongi",
+  storageBucket: "ktown-karongi.firebasestorage.app",
+  messagingSenderId: "123456789012",
+  appId: "1:123456789012:web:abc123"
+};</code></pre>
+    <p class="note">These values are not secret: they only say which project to talk to. The security rules from step 5 protect the data.</p>
+
+    <div class="step-h"><span class="n">7</span><h3>Put the system online</h3></div>
+    <p>Pick one. Both are free and give you an https address that works on every phone.</p>
+    <div class="grid2" style="margin-top:10px">
+      <div class="card"><h3>Easiest: Netlify Drop</h3><ol style="margin-top:8px">
+        <li>Go to <a href="https://app.netlify.com/drop">app.netlify.com/drop</a>.</li>
+        <li>Drag the whole K.Town folder onto the page.</li>
+        <li>Create a free account to keep the site online, then rename the site, for example <b>ktown-karongi</b>, so the address is <code>https://ktown-karongi.netlify.app</code>.</li>
+        <li>To update later, drop the folder again on the same site.</li></ol></div>
+      <div class="card"><h3>Same place as the database: Firebase Hosting</h3><ol style="margin-top:8px">
+        <li>Install Node.js (LTS) from <a href="https://nodejs.org">nodejs.org</a>.</li>
+        <li>Open a terminal in the K.Town folder and run:</li></ol>
+<pre><code>npm install -g firebase-tools
+firebase login
+firebase use --add      (choose ktown-karongi)
+firebase deploy</code></pre>
+        <p>Your address is <code>https://ktown-karongi.web.app</code>. This also publishes <code>firestore.rules</code> for you.</p></div>
+    </div>
+
+    <div class="step-h"><span class="n">8</span><h3>First sign-in as the owner</h3></div>
+    <ol>
+      <li>Open <code>https://your-address/#/admin</code> and sign in with the owner’s email and password.</li>
+      <li>The first time, that account becomes the owner (admin) automatically.</li>
+      <li>Press <b>Set up menu</b> to copy the K.Town menu, the 4 tables and the settings into the live database.</li>
+    </ol>
+
+    <div class="step-h"><span class="n">9</span><h3>Add reception and kitchen</h3></div>
+    <ol>
+      <li>Owner dashboard: <b>Settings → Staff access</b>. Add the reception and kitchen emails from step 4 with their role.</li>
+      <li>Each person signs in once on their device. They stay signed in.</li>
+    </ol>
+
+    <div class="step-h"><span class="n">10</span><h3>Print the QR codes</h3></div>
+    <ol>
+      <li>Owner dashboard: <b>Tables & QR</b>. Type the web address (for example <code>https://ktown-karongi.netlify.app</code>) and press <b>Save address</b>.</li>
+      <li>Press <b>Print table cards</b>. Print at <b>100% / actual size</b> on thick paper or card, cut along the dashed lines, and put one in a stand on each table.</li>
+      <li>Also print the <b>poster</b> (entrance, counter), the <b>printed menu</b> and some <b>feedback cards</b>.</li>
+      <li>Scan each printed card with a phone before putting it out.</li>
+    </ol>
+
+    <div class="step-h"><span class="n">11</span><h3>Set up the screens</h3></div>
+    <div class="card" style="overflow-x:auto"><table>
+      <tr><th>Who</th><th>Open</th><th>Tip</th></tr>
+      <tr><td>Kitchen</td><td><code>…/#/kitchen</code></td><td>A tablet or an old phone. Add to Home Screen, keep it charging, tap Start with sound. The screen stays awake.</td></tr>
+      <tr><td>Reception</td><td><code>…/#/reception</code></td><td>Laptop, tablet or phone. Chimes for new orders, staff calls and bill requests.</td></tr>
+      <tr><td>Owner</td><td><code>…/#/admin</code></td><td>On his phone: Add to Home Screen. Sales, reports, menu and feedback from anywhere.</td></tr>
+    </table></div>
+
+    <div class="step-h"><span class="n">12</span><h3>Test with real phones</h3></div>
+    <p>Scan Table 1, order a drink, watch reception and the kitchen, mark it ready, check the pay pop-up on the phone, send feedback, and see it on the owner’s phone. Then remove any test orders: owner dashboard, Orders, open the order, Cancel.</p>
+    <p class="note" style="margin-top:12px">Need the offline demo again after going live? Add <code>?mode=demo</code> to the address, for example <code>…/index.html?mode=demo#/demo</code>. Demo data stays in that browser and never touches the live database.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>If something goes wrong</h2>
+    <div class="card" style="overflow-x:auto"><table>
+      <tr><th>You see</th><th>Fix</th></tr>
+      <tr><td>“The live database refused this change”</td><td>The rules were not published, the owner email in the rules has a typo, or the staff email is not added under Settings → Staff access.</td></tr>
+      <tr><td>“This sign-in method is not turned on”</td><td>Enable Anonymous and Email/Password (step 3).</td></tr>
+      <tr><td>“Email or password is not right”</td><td>Check the user in Authentication → Users, or reset the password there.</td></tr>
+      <tr><td>“This account is not set up as staff”</td><td>The owner adds that email under Settings → Staff access.</td></tr>
+      <tr><td>Guests see an empty menu</td><td>Sign in as owner and press Set up menu (step 8).</td></tr>
+      <tr><td>A QR code opens the wrong address</td><td>Set the web address in Tables & QR, then print again.</td></tr>
+      <tr><td>Phones still show an old version after an update</td><td>When you change files, change the version number (now <code>1.0.1</code>) in <code>index.html</code>, <code>sw.js</code> and <code>assets/js/app.js</code> (for example to <code>1.0.2</code>) before uploading.</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Cost and privacy</h2>
+    <p>Firebase’s free plan includes 1 GiB of storage, 50,000 reads and 20,000 writes per day. A busy day at K.Town uses a small part of this. Netlify’s free plan is enough for the menu. Neither asks for a card.</p>
+    <p style="margin-top:10px">Guests’ phone numbers and emails are saved only when they tick “send me news”, and only the owner can see them. Message them only about K.Town, and delete anyone who asks. Rwanda’s personal data protection law (Law No. 058/2021) asks businesses to collect data with consent and keep it safe.</p>
+    <p style="margin-top:10px;color:var(--muted)">Sources: <a href="https://cloud.google.com/firestore/pricing">Firestore pricing</a>, <a href="https://www.netlify.com/changelog/2026-07-27-netlify-drop-refresh/">Netlify Drop</a>.</p>
+  </div>
+</section>
+</main>
+<footer><div class="wrap"><a href="../START-HERE.html">Back to Start here</a></div></footer>
+</body>
+</html>

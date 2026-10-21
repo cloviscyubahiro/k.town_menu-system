@@ -1,0 +1,104 @@
+rules_version = '2';
+
+// K.Town — Cloud Firestore security rules (live mode)
+// Paste this whole file into Firebase console → Firestore Database → Rules → Publish.
+//
+// BEFORE PUBLISHING: put the owner's sign-in email below (lowercase).
+// That email becomes the first admin automatically the first time it signs in.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function ownerEmails() { return ['owner@example.com']; }   // ← CHANGE THIS
+
+    function signedIn() { return request.auth != null; }
+    function isPasswordUser() { return signedIn() && request.auth.token.firebase.sign_in_provider == 'password'; }
+    function myEmail() { return request.auth.token.email.lower(); }
+    function staffPath() { return /databases/$(database)/documents/staff/$(myEmail()); }
+    function isStaff() { return isPasswordUser() && exists(staffPath()); }
+    function isAdmin() { return isStaff() && get(staffPath()).data.role == 'admin'; }
+    function changedOnly(keys) { return request.resource.data.diff(resource.data).affectedKeys().hasOnly(keys); }
+    function ownsExisting() { return signedIn() && resource.data.guestUid == request.auth.uid; }
+    function createsOwn() { return signedIn() && request.resource.data.guestUid == request.auth.uid; }
+    function shortText(v, max) { return v is string && v.size() <= max; }
+
+    // ---------- Menu, tables, events, settings: everyone reads, only the owner edits ----------
+    match /settings/{id}   { allow read: if true; allow write: if isAdmin(); }
+    match /categories/{id} { allow read: if true; allow write: if isAdmin(); }
+    match /tables/{id}     { allow read: if true; allow write: if isAdmin(); }
+    match /events/{id}     { allow read: if true; allow write: if isAdmin(); }
+    match /items/{id} {
+      allow read: if true;
+      allow create, delete: if isAdmin();
+      // the owner edits everything; reception and kitchen may only switch "sold out" on and off
+      allow update: if isAdmin() || (isStaff() && changedOnly(['available', 'updatedAt']));
+    }
+
+    // ---------- Staff accounts (document id = the person's email in lowercase) ----------
+    match /staff/{email} {
+      allow read: if isStaff() || (isPasswordUser() && email == myEmail());
+      allow create: if isAdmin()
+        || (isPasswordUser() && email == myEmail() && myEmail() in ownerEmails() && request.resource.data.role == 'admin');
+      allow update, delete: if isAdmin();
+    }
+
+    // ---------- Daily order numbers ----------
+    match /counters/{day} {
+      allow read: if signedIn();
+      allow create: if isStaff() || (signedIn() && request.resource.data.keys().hasOnly(['n']) && request.resource.data.n == 1);
+      allow update: if isStaff() || (signedIn() && request.resource.data.keys().hasOnly(['n']) && request.resource.data.n == resource.data.n + 1);
+    }
+
+    // ---------- Orders ----------
+    match /orders/{id} {
+      allow read: if isStaff() || ownsExisting();
+      allow create: if isStaff() || (createsOwn()
+        && request.resource.data.source == 'guest'
+        && request.resource.data.status in ['new', 'kitchen']
+        && request.resource.data.payment.status == 'unpaid'
+        && request.resource.data.lines is list
+        && request.resource.data.lines.size() > 0 && request.resource.data.lines.size() <= 40
+        && request.resource.data.total is int && request.resource.data.total >= 0
+        && request.resource.data.number is int
+        && request.resource.data.createdAt == request.time
+        && !('sample' in request.resource.data));
+      allow update: if isStaff() || (ownsExisting() && (
+          // the guest says "I've paid"
+          (changedOnly(['payment', 'updatedAt']) && request.resource.data.payment.status == 'claimed' && resource.data.payment.status != 'paid')
+          // the guest cancels before the kitchen starts
+          || (changedOnly(['status', 'statusAt', 'cancelReason', 'cancelledBy', 'updatedAt'])
+              && request.resource.data.status == 'cancelled' && resource.data.status in ['new', 'kitchen'])
+        ));
+      allow delete: if isAdmin();
+    }
+
+    // ---------- Call staff / ask for the bill ----------
+    match /requests/{id} {
+      allow read: if isStaff() || ownsExisting();
+      allow create: if isStaff() || (createsOwn() && request.resource.data.status == 'open' && request.resource.data.type in ['staff', 'bill']);
+      allow update, delete: if isStaff();
+    }
+
+    // ---------- Table bookings ----------
+    match /reservations/{id} {
+      allow read: if isStaff() || ownsExisting();
+      allow create: if isStaff() || (createsOwn()
+        && request.resource.data.status == 'pending'
+        && shortText(request.resource.data.name, 80) && shortText(request.resource.data.phone, 20)
+        && request.resource.data.guests is int && request.resource.data.guests > 0 && request.resource.data.guests <= 50);
+      allow update, delete: if isStaff();
+    }
+
+    // ---------- Feedback (goes straight to the owner) ----------
+    match /feedback/{id} {
+      allow read, update, delete: if isStaff();
+      allow create: if isStaff() || (createsOwn() && (!('rating' in request.resource.data) || request.resource.data.rating is int));
+    }
+
+    // ---------- Guests who agreed to hear about events ----------
+    match /contacts/{id} {
+      allow read, update, delete: if isAdmin();
+      allow create: if isStaff() || (createsOwn() && request.resource.data.optIn == true);
+    }
+  }
+}

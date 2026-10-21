@@ -1,0 +1,14 @@
+Third-party components included in the K.Town digital system
+
+- Jost (fonts) by Owen Earl (indestructible type*) — SIL Open Font License 1.1
+- Cormorant Garamond (fonts) by Christian Thalmann (Catharsis Fonts) — SIL Open Font License 1.1
+- Lucide icons — ISC License, Copyright (c) Lucide Contributors
+- Preact — MIT License, Copyright (c) 2015-present Jason Miller
+- htm — Apache License 2.0, Copyright 2018 Google Inc.
+- qrcode-generator — MIT License, Copyright (c) 2009 Kazuhiko Arase
+  "QR Code" is a registered trademark of DENSO WAVE INCORPORATED.
+
+Full licence texts: assets/fonts/OFL-Jost.txt, assets/fonts/OFL-Cormorant-Garamond.txt, and
+LICENSE-lucide.txt, LICENSE-preact.txt, LICENSE-htm.txt, LICENSE-qrcode-generator.txt in assets/js/vendor.
+
+The K.Town name, logo and photographs belong to K.Town Liquor Boutique.

@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>K.Town brand guidelines</title>
+<link rel="icon" href="../assets/img/icons/favicon.svg" type="image/svg+xml">
+<style>
+@font-face { font-family: 'Jost'; font-weight: 100 900; font-display: swap; src: url(../assets/fonts/jost-latin-wght-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 500; font-display: swap; src: url(../assets/fonts/cormorant-garamond-latin-500-italic.woff2) format('woff2'); }
+@page { size: A4 portrait; margin: 0; }
+:root { --wine: #751228; --deep: #4f0b1a; --rose: #d68a97; --blush: #f7eef0; --line: #ecdade; --ink: #000; --text: #2a2023; --muted: #6f6367; }
+* { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; background: #e9e4e5; font-family: 'Jost', system-ui, sans-serif; color: var(--text); font-size: 3.7mm; line-height: 1.5; }
+.bp { width: 210mm; height: 297mm; margin: 10mm auto; background: #fff; position: relative; overflow: hidden; padding: 20mm 18mm 16mm; box-shadow: 0 6px 30px rgba(0,0,0,.15); page-break-after: always; break-after: page; display: flex; flex-direction: column; }
+.bp:last-child { page-break-after: auto; break-after: auto; }
+@media print { body { background: #fff; } .bp { margin: 0; box-shadow: none; } }
+@media screen and (max-width: 820px) { body { font-size: 15px; } .bp { width: auto; height: auto; min-height: 0; margin: 12px; padding: 24px 18px; } }
+h1, h2, h3 { margin: 0; color: var(--ink); font-weight: 500; line-height: 1.15; }
+.kicker { font-size: 3.2mm; color: var(--wine); font-weight: 500; }
+.ttl { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: 13mm; line-height: 1.02; margin-top: 2mm; }
+.sub { color: var(--muted); font-size: 4.2mm; margin-top: 3mm; max-width: 150mm; }
+.pno { position: absolute; bottom: 9mm; right: 18mm; font-size: 2.8mm; color: var(--muted); }
+.brandfoot { position: absolute; bottom: 9mm; left: 18mm; font-size: 2.8mm; color: var(--muted); }
+.cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+.cols3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; }
+.box { border: 0.3mm solid var(--line); border-radius: 4mm; padding: 5mm; }
+.box h3 { font-size: 4.4mm; margin-bottom: 1.5mm; }
+.muted { color: var(--muted); }
+p { margin: 0; }
+img { display: block; max-width: 100%; }
+/* cover */
+.cover { background: var(--wine); color: #fff; justify-content: center; align-items: center; text-align: center; }
+.cover img.logo { width: 78mm; }
+.cover h1 { color: #fff; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16mm; margin-top: 16mm; }
+.cover p { color: rgba(255,255,255,.85); font-size: 4.4mm; margin-top: 3mm; }
+.cover .ver { position: absolute; bottom: 24mm; left: 0; right: 0; font-size: 3.2mm; color: rgba(255,255,255,.7); }
+.cover svg.pour { position: absolute; left: 0; right: 0; bottom: -0.3mm; width: 100%; height: 16mm; }
+.cover svg.pour path { fill: #fff; }
+/* personality */
+.trait { padding: 4mm 0; border-top: 0.3mm solid var(--line); display: grid; grid-template-columns: 40mm 1fr; gap: 5mm; }
+.trait b { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; font-size: 7mm; color: var(--ink); line-height: 1.1; }
+/* logo */
+.lg { border-radius: 4mm; display: grid; place-items: center; padding: 6mm; min-height: 44mm; }
+.lg img { max-height: 32mm; width: auto; }
+.lg.w { background: #fff; border: 0.3mm solid var(--line); }
+.lg.r { background: var(--wine); }
+.lg.b { background: #000; }
+.cap { font-size: 3.1mm; color: var(--muted); margin-top: 2mm; }
+.clear { position: relative; display: inline-block; padding: 6mm; border: 0.3mm dashed var(--rose); border-radius: 2mm; }
+.clear img { width: 28mm; }
+.dont { position: relative; border: 0.3mm solid var(--line); border-radius: 4mm; height: 46mm; display: grid; place-items: center; overflow: hidden; background: #fff; }
+.dont img { max-height: 30mm; width: auto; }
+.dont .x { position: absolute; top: 2.5mm; right: 3mm; width: 6mm; height: 6mm; border-radius: 50%; background: var(--wine); color: #fff; display: grid; place-items: center; font-size: 4mm; font-weight: 600; line-height: 1; }
+/* colour */
+.sw { border-radius: 4mm; overflow: hidden; border: 0.3mm solid var(--line); }
+.sw .chip { height: 34mm; }
+.sw .info { padding: 3.5mm 4mm; font-size: 3.1mm; line-height: 1.55; }
+.sw .info b { font-size: 4.2mm; color: var(--ink); display: block; font-weight: 500; }
+.sw.small .chip { height: 20mm; }
+.ratio { display: flex; height: 9mm; border-radius: 2.5mm; overflow: hidden; border: 0.3mm solid var(--line); margin-top: 3mm; }
+.ratio div { display: grid; place-items: center; font-size: 2.9mm; }
+/* type */
+.spec { border-top: 0.3mm solid var(--line); padding: 5mm 0; display: grid; grid-template-columns: 52mm 1fr; gap: 6mm; align-items: baseline; }
+.spec .n { font-size: 3.1mm; color: var(--muted); }
+.serifbig { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500; }
+/* photos */
+.ph { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; }
+.ph img { width: 100%; height: 38mm; object-fit: cover; border-radius: 3mm; }
+.pourdemo { position: relative; height: 44mm; border-radius: 4mm; overflow: hidden; }
+.pourdemo img { width: 100%; height: 100%; object-fit: cover; }
+.pourdemo svg { position: absolute; left: 0; right: 0; bottom: -0.3mm; width: 100%; height: 9mm; }
+.pourdemo svg path { fill: #fff; }
+.rule svg { width: 100%; height: 7mm; }
+.rule path { fill: none; stroke: var(--wine); stroke-width: 1.3px; vector-effect: non-scaling-stroke; }
+/* voice */
+table { width: 100%; border-collapse: collapse; font-size: 3.4mm; }
+th, td { text-align: left; padding: 2.6mm 3mm; border-bottom: 0.3mm solid var(--line); vertical-align: top; }
+th { font-weight: 500; color: var(--muted); font-size: 3mm; }
+.quote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 6mm; color: var(--ink); line-height: 1.25; }
+.msg { background: #e7f7e6; border-radius: 3mm 3mm 3mm 0.6mm; padding: 3.5mm 4mm; font-size: 3.4mm; max-width: 120mm; }
+/* applications */
+.apps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; }
+.apps figure { margin: 0; }
+.apps img { width: 100%; height: 62mm; object-fit: cover; object-position: top; border-radius: 3mm; border: 0.3mm solid var(--line); background: #faf7f8; }
+.apps figcaption { font-size: 3mm; color: var(--muted); margin-top: 1.5mm; }
+ul.r { margin: 2mm 0 0; padding-left: 5mm; }
+ul.r li { margin: 1.4mm 0; }
+</style>
+</head>
+<body>
+
+<!-- 1 COVER -->
+<section class="bp cover">
+  <img class="logo" src="../assets/img/brand/ktown-logo-white.svg" alt="K.Town logo">
+  <h1>Brand guidelines</h1>
+  <p>K.Town Liquor Boutique, Gitesi, Karongi</p>
+  <div class="ver">Version 1.0, October 2026</div>
+  <svg class="pour" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0,20.6 C104,12.5 210,8 293,18 C444,36.3 571,42 908,35 C936,35.1 974,34.9 1000,34.9 L1000,60 L0,60 Z"/></svg>
+</section>
+
+<!-- 2 THE BRAND -->
+<section class="bp">
+  <div class="kicker">The brand</div>
+  <h1 class="ttl">Where Lake Kivu meets the glass</h1>
+  <p class="sub">K.Town is a liquor boutique, café and terrace above Lake Kivu in Karongi. Guests come for a glass of wine at sunset, an iced coffee on the terrace, a fresh juice after a day on the lake, and a quiet room for the night. The brand should feel like the place: warm, relaxed, a little elegant, proudly Rwandan and at ease with visitors from anywhere.</p>
+  <div style="margin-top:9mm">
+    <div class="trait"><b>Warm</b><p>We greet everyone like a regular. Murakaza neza, bienvenue, welcome: the first words are always a welcome.</p></div>
+    <div class="trait"><b>Refined, not fussy</b><p>Good glasses, clean design, prices that are easy to read. Nothing loud, nothing cluttered.</p></div>
+    <div class="trait"><b>Rooted</b><p>Lake Kivu, the hills, kitenge on the tables, the K.TOWN sign glowing at night. Local pride in every detail.</p></div>
+    <div class="trait"><b>Easy for the world</b><p>Three languages, clear prices in RWF with a dollar guide, order from the table, pay with MoMo.</p></div>
+  </div>
+  <div class="cols2" style="margin-top:8mm">
+    <div class="box"><h3>Our promise</h3><p>A great drink, a great view and an easy visit: order from your table, pay when you’re ready, and come back for the next event.</p></div>
+    <div class="box"><h3>Who we welcome</h3><p>International travellers and tourists, Rwandan visitors from Kigali and beyond, guests staying in our rooms, and Karongi friends who come for events.</p></div>
+  </div>
+  <p class="muted" style="margin-top:6mm;font-size:3.2mm">“Where Lake Kivu meets the glass” is a suggested brand line for social media, signs and the future website. The official name stays K.Town Liquor Boutique.</p>
+  <span class="brandfoot">K.Town brand guidelines</span><span class="pno">2</span>
+</section>
+
+<!-- 3 LOGO -->
+<section class="bp">
+  <div class="kicker">Logo</div>
+  <h1 class="ttl">One glass, one K</h1>
+  <p class="sub">The K is a corkscrew opening a glass of wine. Keep it exactly as drawn: always from the original files in <b>assets/img/brand</b>.</p>
+  <div class="cols3" style="margin-top:8mm">
+    <div><div class="lg w"><img src="../assets/img/brand/ktown-logo.svg" alt=""></div><p class="cap"><b>Full logo.</b> First choice whenever there is room.</p></div>
+    <div><div class="lg w"><img src="../assets/img/brand/ktown-mark.svg" alt="" style="max-height:34mm"></div><p class="cap"><b>Mark.</b> App icon, small spaces, centre of the QR code.</p></div>
+    <div><div class="lg w"><img src="../assets/img/brand/ktown-wordmark.svg" alt="" style="max-height:10mm;width:46mm"></div><p class="cap"><b>Wordmark.</b> Wide spaces, next to the mark on photos.</p></div>
+  </div>
+  <div class="cols3" style="margin-top:6mm">
+    <div><div class="lg w"><img src="../assets/img/brand/ktown-logo.svg" alt=""></div><p class="cap">On white and light paper: black and wine.</p></div>
+    <div><div class="lg r"><img src="../assets/img/brand/ktown-logo-white.svg" alt=""></div><p class="cap">On wine: white, with rosé wine in the glass.</p></div>
+    <div><div class="lg b"><img src="../assets/img/brand/ktown-logo-white.svg" alt=""></div><p class="cap">On black or a dark photo: white and rosé.</p></div>
+  </div>
+  <div class="cols2" style="margin-top:8mm;align-items:center">
+    <div style="text-align:center"><span class="clear"><img src="../assets/img/brand/ktown-logo.svg" alt=""></span></div>
+    <div><h3 style="font-size:4.6mm">Space and size</h3>
+      <ul class="r"><li><b>Clear space:</b> keep empty space around the logo at least the height of the “O” in TOWN.</li>
+      <li><b>Smallest full logo:</b> 25 mm wide in print, 120 px on screen.</li>
+      <li><b>Smallest mark:</b> 8 mm in print, 32 px on screen.</li>
+      <li>On photos, add a soft dark gradient behind the logo so it stays readable.</li></ul></div>
+  </div>
+  <span class="brandfoot">K.Town brand guidelines</span><span class="pno">3</span>
+</section>
+
+<!-- 4 LOGO DON'TS -->
+<section class="bp">
+  <div class="kicker">Logo</div>
+  <h1 class="ttl">Please don’t</h1>
+  <p class="sub">A logo becomes a brand when it looks the same everywhere: on the sign, the menu, WhatsApp and the receipt.</p>
+  <div class="cols3" style="margin-top:9mm;row-gap:7mm">
+    <div><div class="dont"><span class="x">×</span><img src="../assets/img/brand/ktown-logo.svg" alt="" style="transform:scaleX(1.5)"></div><p class="cap">Stretch or squash it.</p></div>
+    <div><div class="dont"><span class="x">×</span><img src="../assets/img/brand/ktown-logo.svg" alt="" style="filter:hue-rotate(150deg) saturate(2.2)"></div><p class="cap">Change its colours.</p></div>
+    <div><div class="dont"><span class="x">×</span><img src="../assets/img/brand/ktown-logo.svg" alt="" style="transform:rotate(-16deg)"></div><p class="cap">Rotate or tilt it.</p></div>
+    <div><div class="dont"><span class="x">×</span><img src="../assets/img/brand/ktown-logo.svg" alt="" style="filter:drop-shadow(1.2mm 1.2mm 0 #ffcb05) drop-shadow(-0.8mm -0.8mm 0 #2a5bd7)"></div><p class="cap">Add outlines, glows, shadows or 3D.</p></div>
+    <div><div class="dont" style="background:url(../assets/img/print/print-ice-latte.jpg) center/cover"><span class="x">×</span><img src="../assets/img/brand/ktown-logo-white.svg" alt=""></div><p class="cap">Put it on a busy photo without a dark overlay.</p></div>
+    <div><div class="dont"><span class="x">×</span><div style="display:flex;align-items:flex-end;gap:2mm"><img src="../assets/img/brand/ktown-mark.svg" alt="" style="max-height:22mm"><span style="font-family:'Times New Roman',serif;font-weight:700;font-size:9mm;color:#751228">K-Town</span></div></div><p class="cap">Retype the name in another font.</p></div>
+  </div>
+  <span class="brandfoot">K.Town brand guidelines</span><span class="pno">4</span>
+</section>
+
+<!-- 5 COLOUR -->
+<section class="bp">
+  <div class="kicker">Colour</div>
+  <h1 class="ttl">The colours of the logo</h1>
+  <p class="sub">Wine, black and white come straight from the logo file. Use mostly white, black for words, and wine for the one thing that matters most on the page.</p>
+  <div class="cols3" style="margin-top:8mm">
+    <div class="sw"><div class="chip" style="background:#751228"></div><div class="info"><b>K.Town Wine</b>HEX #751228<br>RGB 117 18 40<br>CMYK 0 85 66 54</div></div>
+    <div class="sw"><div class="chip" style="background:#000"></div><div class="info"><b>Black</b>HEX #000000<br>RGB 0 0 0<br>CMYK 0 0 0 100</div></div>
+    <div class="sw"><div class="chip" style="background:#fff"></div><div class="info"><b>White</b>HEX #FFFFFF<br>RGB 255 255 255<br>CMYK 0 0 0 0</div></div>
+  </div>
+  <h3 style="font-size:4.6mm;margin-top:9mm">Supporting tints</h3>
+  <div class="cols3" style="margin-top:3mm">
+    <div class="sw small"><div class="chip" style="background:#f7eef0"></div><div class="info"><b>Blush</b>#F7EEF0. Soft backgrounds, labels, selected items.</div></div>
+    <div class="sw small"><div class="chip" style="background:#d68a97"></div><div class="info"><b>Rosé</b>#D68A97. The wine in the logo on dark backgrounds.</div></div>
+    <div class="sw small"><div class="chip" style="background:#4f0b1a"></div><div class="info"><b>Deep wine</b>#4F0B1A. Pressed buttons, dark accents.</div></div>
+  </div>
+  <h3 style="font-size:4.6mm;margin-top:9mm">Balance</h3>
+  <div class="ratio"><div style="flex:60;background:#fff">White 60%</div><div style="flex:30;background:#000;color:#fff">Black 30%</div><div style="flex:10;background:#751228;color:#fff">Wine 10%</div></div>
+  <ul class="r" style="margin-top:6mm">
+    <li>Wine text on white has a contrast of about 11:1, so it reads well at any size. Rosé is for the logo and decoration, never for small text.</li>
+    <li>For printing, give the printer the HEX and CMYK values and approve a printed proof before a big order: screens and paper show colour differently.</li>
+    <li>Staff screens use amber (preparing) and green (ready) for order status only, always together with a word.</li>
+  </ul>
+  <span class="brandfoot">K.Town brand guidelines</span><span class="pno">5</span>
+</section>
+
+<!-- 6 TYPE -->
+<section class="bp">
+  <div class="kicker">Typography</div>
+  <h1 class="ttl">Two typefaces, two jobs</h1>
+  <p class="sub">Both are free Google Fonts (SIL Open Font License) and are already built into the K.Town system.</p>
+  <div class="cols2" style="margin-top:8mm">
+    <div class="box"><div style="font-size:12mm;font-weight:300;line-height:1">Jost</div><p style="margin-top:3mm"><b>The voice of the logo.</b> Round and geometric like the K.TOWN letters. For headings, text, prices, buttons and signs.</p></div>
+    <div class="box"><div class="serifbig" style="font-size:12mm;line-height:1">Cormorant Garamond</div><p style="margin-top:3mm"><b>The host’s voice.</b> A classic italic for menu section titles, greetings and short headlines. Never for long text or numbers.</p></div>
+  </div>
+  <div style="margin-top:8mm">
+    <div class="spec"><span class="n">Greeting, Cormorant italic</span><span class="serifbig" style="font-size:10mm;color:#000">Welcome to K.Town</span></div>
+    <div class="spec"><span class="n">Menu section, Cormorant italic</span><span class="serifbig" style="font-size:8mm;color:#000">Fresh juice</span></div>
+    <div class="spec"><span class="n">Item and price, Jost Medium</span><span style="font-size:5mm;font-weight:500;color:#000;display:flex;justify-content:space-between;max-width:90mm">Mango juice <span>5,000</span></span></div>
+    <div class="spec"><span class="n">Description, Jost Regular</span><span style="font-size:4mm;color:#6f6367">Ripe mango, blended smooth.</span></div>
+    <div class="spec"><span class="n">Table name, Jost Light, spaced</span><span style="font-size:7mm;font-weight:300;letter-spacing:.22em;color:#751228">TABLE 2</span></div>
+    <div class="spec"><span class="n">Total, Jost Medium</span><span style="font-size:5mm;font-weight:500;color:#000">RWF 14,500</span></div>
+  </div>
+  <ul class="r" style="margin-top:4mm">
+    <li>Write in sentence case. Spaced capitals are kept for table names and the “Liquor Boutique” line, an echo of the wordmark.</li>
+    <li>On menus, show prices without the currency and say “Prices in Rwandan francs (RWF)” once. Totals are written “RWF 14,500”.</li>
+    <li>If Jost is missing in Word or Canva, use Futura or Century Gothic; for Cormorant, use Garamond Italic.</li>
+  </ul>
+  <span class="brandfoot">K.Town brand guidelines</span><span class="pno">6</span>
+</section>
+
+<!-- 7 POUR LINE + PHOTOGRAPHY -->
+<section class="bp">
+  <div class="kicker">Shape and photography</div>
+  <h1 class="ttl">The pour line</h1>
+  <p class="sub">The wave of wine inside the logo is K.Town’s one graphic shape. It finishes a photo, closes a dark panel or divides a page. Once per layout is enough.</p>
+  <div class="cols2" style="margin-top:6mm">
+    <div class="pourdemo"><img src="../assets/img/photos/cover-sunset.webp" alt=""><svg viewBox="0 0 1000 60" preserveAspectRatio="none"><path d="M0,20.6 C104,12.5 210,8 293,18 C444,36.3 571,42 908,35 C936,35.1 974,34.9 1000,34.9 L1000,60 L0,60 Z"/></svg></div>
+    <div style="display:grid;align-content:center;gap:4mm"><div class="rule"><svg viewBox="0 0 1000 60" preserveAspectRatio="none"><path d="M0,30 C120,10 240,8 330,26 C460,52 600,54 1000,40"/></svg></div>
+      <p class="cap">White over photos (menu cover, table cards, poster). A thin wine line on paper (printed menu). Wine under dark panels (owner dashboard).</p></div>
+  </div>
+  <h2 class="ttl" style="font-size:10mm;margin-top:9mm">Real K.Town, real light</h2>
+  <div class="ph" style="margin-top:4mm">
+    <img src="../assets/img/photos/cover-sunset.webp" alt=""><img src="../assets/img/photos/cover-lake.webp" alt=""><img src="../assets/img/photos/cover-night.webp" alt="">
+    <img src="../assets/img/photos/item-ice-latte.webp" alt=""><img src="../assets/img/photos/item-mango.webp" alt=""><img src="../assets/img/photos/cat-tea.webp" alt="">
+  </div>
+  <div class="cols2" style="margin-top:5mm">
+    <div><h3 style="font-size:4.2mm">Do</h3><ul class="r"><li>Use our own photos: the lake, the terrace, the sign at night.</li><li>Natural daylight, one drink as the hero.</li><li>Show the kitenge, the view or the person enjoying it.</li><li>Shoot from where the guest sits.</li></ul></div>
+    <div><h3 style="font-size:4.2mm">Don’t</h3><ul class="r"><li>Use flash or dark, blurry photos.</li><li>Leave bottles, phones and bills on the table.</li><li>Use stock photos of other places.</li><li>Add heavy filters or text on the photo.</li></ul></div>
+  </div>
+  <span class="brandfoot">K.Town brand guidelines</span><span class="pno">7</span>
+</section>
+
+<!-- 8 VOICE -->
+<section class="bp">
+  <div class="kicker">Voice</div>
+  <h1 class="ttl">Write like a good host talks</h1>
+  <p class="sub">Short, warm and clear. Greet first, say what happens next, use plain words. Guests read us in English, French and Kinyarwanda.</p>
+  <table style="margin-top:7mm">
+    <tr><th style="width:38%">Instead of</th><th>Write</th></tr>
+    <tr><td>Order submitted successfully.</td><td>Order received. Our team is confirming your order.</td></tr>
+    <tr><td>Status: ready for delivery.</td><td>Your order is ready. We’re bringing it to Table 2 now.</td></tr>
+    <tr><td>Payment pending.</td><td>Pay whenever you’re ready.</td></tr>
+    <tr><td>Error: network failure.</td><td>Your order didn’t go through. Check your connection and try again.</td></tr>
+    <tr><td>Rate our service.</td><td>How was your visit?</td></tr>
+  </table>
+  <div class="cols2" style="margin-top:8mm">
+    <div><h3 style="font-size:4.4mm">Menu descriptions</h3><p style="margin-top:2mm">One short line: what it is and why it’s good.</p>
+      <p class="quote" style="margin-top:3mm">Ripe mango, blended smooth.</p><p class="quote">Espresso poured over cold milk and ice.</p></div>
+    <div><h3 style="font-size:4.4mm">Three languages</h3>
+      <p class="quote" style="margin-top:3mm">Welcome to K.Town</p><p class="quote">Bienvenue chez K.Town</p><p class="quote">Murakaza neza kuri K.Town</p>
+      <p class="cap">Thank you: Merci, Murakoze.</p></div>
+  </div>
+  <h3 style="font-size:4.4mm;margin-top:8mm">Event messages (WhatsApp or SMS)</h3>
+  <div class="msg" style="margin-top:3mm">Hello Aline! K.Town: Live music on the terrace, Fri 24 Oct 19:00. Free entry, cocktails at happy-hour prices. See you in Karongi!</div>
+  <p class="cap" style="margin-top:3mm">Only to guests who said yes. One message per event, never more than two a month.</p>
+  <span class="brandfoot">K.Town brand guidelines</span><span class="pno">8</span>
+</section>
+
+<!-- 9 APPLICATIONS -->
+<section class="bp">
+  <div class="kicker">In use</div>
+  <h1 class="ttl">The brand at work</h1>
+  <p class="sub">Every piece below is made by the K.Town system from the same menu, so prices and items always match.</p>
+  <div class="apps" style="margin-top:7mm">
+    <figure><img src="img/print-table-card.webp" alt=""><figcaption>QR table card, one per table</figcaption></figure>
+    <figure><img src="img/guest-cover.webp" alt=""><figcaption>Digital menu on the guest’s phone</figcaption></figure>
+    <figure><img src="img/guest-ready.webp" alt="" style="object-position:bottom"><figcaption>“Ready, here is where to pay”</figcaption></figure>
+    <figure><img src="img/print-poster.webp" alt=""><figcaption>Poster for the entrance and counter</figcaption></figure>
+    <figure><img src="img/print-menu.webp" alt=""><figcaption>Printed menu for guests without a smartphone</figcaption></figure>
+    <figure><img src="img/admin-phone.webp" alt=""><figcaption>Owner dashboard on the phone</figcaption></figure>
+  </div>
+  <span class="brandfoot">K.Town brand guidelines</span><span class="pno">9</span>
+</section>
+
+<!-- 10 QR -->
+<section class="bp">
+  <div class="kicker">QR codes</div>
+  <h1 class="ttl">The K.Town QR code</h1>
+  <p class="sub">Wine dots, black corners and the K.Town mark in the centre. The system makes one for every table in Owner dashboard, Tables & QR.</p>
+  <div class="cols2" style="margin-top:8mm;align-items:start">
+    <div><img src="img/print-table-card.webp" alt="" style="border-radius:4mm;border:0.3mm solid var(--line)"></div>
+    <div><ul class="r">
+      <li>Print the code <b>at least 3 cm wide</b>; 4 to 5 cm on table cards (ours are 5 cm).</li>
+      <li>Keep the <b>white margin</b> around it, and always put it on a white panel, never straight on a photo or a dark colour.</li>
+      <li>Keep the web address <b>short</b> (for example <i>ktown-karongi.netlify.app</i> or <i>menu.ktown.rw</i>): shorter addresses make simpler codes that scan faster.</li>
+      <li><b>Test every printed code</b> with two different phones before it goes on a table.</li>
+      <li>Each table has its own code. Renaming a table keeps the same code, so printed cards keep working.</li>
+      <li><b>Print again</b> only when the web address changes.</li>
+      <li>Put the code where people sit: in a stand on each table, on the counter, at the entrance.</li></ul></div>
+  </div>
+  <span class="brandfoot">K.Town brand guidelines</span><span class="pno">10</span>
+</section>
+</body>
+</html>
