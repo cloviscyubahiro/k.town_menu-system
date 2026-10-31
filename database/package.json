@@ -1,0 +1,15 @@
+{
+  "name": "ktown-database",
+  "version": "1.0.0",
+  "private": true,
+  "description": "K.Town SQLite schema, reference data and tests",
+  "type": "module",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "test": "node --no-warnings --test \"test/*.test.mjs\"",
+    "db:create": "node --no-warnings scripts/create-db.mjs",
+    "db:create:sample": "node --no-warnings scripts/create-db.mjs --sample"
+  }
+}

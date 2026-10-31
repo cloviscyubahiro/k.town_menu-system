@@ -1,0 +1,5 @@
+# database files are created locally, never committed
+*.db
+*.db-wal
+*.db-shm
+node_modules/

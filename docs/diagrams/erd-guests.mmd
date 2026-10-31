@@ -1,0 +1,60 @@
+erDiagram
+  dining_tables ||--o{ service_requests : "call staff, bill"
+  dining_tables |o--o{ reservations : "booked"
+  customers |o--o{ reservations : "made by"
+  customers |o--o{ feedback : "left by"
+  orders |o--o| feedback : "rated in"
+  announcements ||--o{ announcement_translations : "translated in"
+  dining_tables {
+    int id PK
+    text code UK "T1, printed in the QR, never changes"
+    text name "Table 1, Rooftop ..."
+    int is_active
+  }
+  customers {
+    int id PK
+    text name
+    text phone UK
+    text email UK
+    int marketing_opt_in
+    text opted_in_at "proof of consent"
+    text opted_out_at
+  }
+  service_requests {
+    int id PK
+    int table_id FK
+    text request_type "call_staff, bill"
+    text status "open, done"
+  }
+  reservations {
+    int id PK
+    text guest_name
+    text phone
+    int party_size
+    text reserved_for
+    text status "requested ... seated"
+  }
+  feedback {
+    int id PK
+    text source "digital, paper"
+    int rating "1 to 5"
+    text comment
+    int order_id FK, UK
+  }
+  announcements {
+    int id PK
+    text kind "event, promotion, new_item, news"
+    text title
+    text event_at
+    int is_published
+  }
+  announcement_translations {
+    int announcement_id PK, FK
+    text lang PK
+    text title
+  }
+  settings {
+    text key PK "payment.momo_number ..."
+    text value "JSON"
+    int version
+  }

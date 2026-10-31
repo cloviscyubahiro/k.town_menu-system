@@ -1,0 +1,9 @@
+flowchart LR
+  G["Guest phone<br/>scans the table QR"] -->|HTTPS| API
+  R["Reception<br/>tablet or laptop"] -->|HTTPS + live updates| API
+  K["Kitchen<br/>tablet"] -->|HTTPS + live updates| API
+  O["Owner<br/>phone or laptop"] -->|HTTPS| API
+  subgraph S["K.Town server"]
+    API["Node.js API<br/>sign-in, permissions,<br/>business actions"] -->|"one connection,<br/>transactions"| DB[("SQLite<br/>ktown.db")]
+  end
+  DB -->|"nightly copy"| B[("Backup<br/>kept off the server")]

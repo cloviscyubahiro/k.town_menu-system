@@ -1,0 +1,84 @@
+erDiagram
+  dining_tables ||--o{ orders : "ordered at"
+  customers |o--o{ orders : "may leave a number"
+  orders ||--|{ order_items : "lines"
+  menu_items ||--o{ order_items : "ordered as"
+  orders ||--|{ order_status_events : "history"
+  order_status_transitions ||--o{ order_status_events : "allows the step"
+  orders ||--o| invoices : "billed when accepted"
+  invoices ||--|{ invoice_lines : "lines"
+  order_items ||--o| invoice_lines : "copied into"
+  order_items ||--o{ stock_movements : "used stock"
+  payments ||--|{ payment_allocations : "split over"
+  invoices ||--o{ payment_allocations : "paid by"
+  invoices ||--o{ payment_claims : "guest says paid"
+  orders {
+    int id PK
+    text business_date "Kigali day, starts 05:00"
+    int order_number "#1, #2 ... per day"
+    text tracking_token_hash UK "guest phone token"
+    text channel "qr or counter"
+    int table_id FK
+    text status "follows the history only"
+  }
+  order_items {
+    int id PK
+    int order_id FK
+    int menu_item_id FK
+    text item_name "copied from the menu"
+    int unit_price_rwf "copied from the menu"
+    int quantity
+    int line_total_rwf "computed"
+  }
+  order_status_transitions {
+    text from_status PK
+    text to_status PK
+    text permission_code FK
+    int guest_allowed
+  }
+  order_status_events {
+    int id PK
+    int order_id FK
+    text from_status
+    text to_status
+    text actor_type "guest or employee"
+    int actor_employee_id FK
+    text reason "required to cancel"
+  }
+  invoices {
+    int id PK
+    int invoice_seq UK "1, 2, 3 ... no gaps"
+    text invoice_number "KT-000123"
+    int order_id FK, UK
+    int total_rwf
+    int amount_paid_rwf "sum of allocations"
+    text status "unpaid, partially_paid, paid, void"
+  }
+  invoice_lines {
+    int id PK
+    int invoice_id FK
+    int order_item_id FK, UK
+    text description
+    int unit_price_rwf
+    int quantity
+  }
+  payments {
+    int id PK
+    text method "momo, cash, card"
+    int amount_rwf
+    text reference "MoMo transaction id"
+    int received_by FK
+    text voided_at "owner only"
+  }
+  payment_allocations {
+    int id PK
+    int payment_id FK
+    int invoice_id FK
+    int amount_rwf
+  }
+  payment_claims {
+    int id PK
+    int invoice_id FK
+    text status "pending, confirmed, rejected"
+    int payment_id FK
+  }

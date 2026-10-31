@@ -1,0 +1,21 @@
+# Runs the database tests on GitHub every time something in database/ changes.
+name: Database tests
+
+on:
+  push:
+    paths: ['database/**', '.github/workflows/database-tests.yml']
+  pull_request:
+    paths: ['database/**', '.github/workflows/database-tests.yml']
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: database
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test

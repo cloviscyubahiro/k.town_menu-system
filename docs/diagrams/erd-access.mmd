@@ -1,0 +1,52 @@
+erDiagram
+  roles ||--o{ employees : "is the job of"
+  roles ||--o{ role_permissions : "allows by default"
+  permissions ||--o{ role_permissions : "listed in"
+  permissions ||--o{ employee_permission_grants : "given as"
+  employees ||--o{ employee_permission_grants : "receives"
+  employees ||--o{ employee_sessions : "signs in on"
+  employees ||--o{ audit_log : "acts in"
+  roles {
+    int id PK
+    text code UK "admin, reception, kitchen"
+    text name
+  }
+  permissions {
+    text code PK "e.g. inventory.adjust"
+    text area
+    int grantable "1 = owner may give it to one person"
+  }
+  role_permissions {
+    int role_id PK, FK
+    text permission_code PK, FK
+  }
+  employees {
+    int id PK
+    text full_name
+    text phone UK "+2507..."
+    int role_id FK
+    text job_title "e.g. Head chef"
+    text pin_hash "argon2id hash, never the PIN"
+    text status "active, suspended, removed"
+    int version "edit counter"
+  }
+  employee_permission_grants {
+    int id PK
+    int employee_id FK
+    text permission_code FK
+    int granted_by FK
+    text revoked_at "NULL = active"
+  }
+  employee_sessions {
+    int id PK
+    int employee_id FK
+    text token_hash UK "SHA-256 of the cookie"
+    text expires_at
+    text revoked_at
+  }
+  audit_log {
+    int id PK
+    int actor_employee_id FK
+    text action "e.g. permission.granted"
+    text details "JSON"
+  }
