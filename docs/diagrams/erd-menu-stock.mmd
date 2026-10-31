@@ -1,0 +1,65 @@
+erDiagram
+  menu_categories ||--o{ menu_items : "contains"
+  menu_categories ||--o{ menu_category_translations : "translated in"
+  menu_items ||--o{ menu_item_translations : "translated in"
+  menu_items ||--o{ menu_item_price_history : "price changes"
+  menu_items ||--o{ menu_item_components : "recipe"
+  stock_items ||--o{ menu_item_components : "used in"
+  stock_items ||--o{ stock_movements : "every change"
+  stock_items ||--o{ notifications : "low or out"
+  menu_items ||--o{ notifications : "sold out"
+  menu_categories {
+    int id PK
+    text name "Fresh juice, Coffee, Tea"
+    int sort_order
+    int is_active
+  }
+  menu_items {
+    int id PK
+    int category_id FK
+    text name
+    int price_rwf "whole francs"
+    int is_available "kitchen's sold-out switch"
+    int is_active "0 = off the menu, kept"
+    int version
+  }
+  menu_item_translations {
+    int menu_item_id PK, FK
+    text lang PK "fr, rw"
+    text name
+  }
+  menu_item_price_history {
+    int id PK
+    int menu_item_id FK
+    int old_price_rwf
+    int new_price_rwf
+    int changed_by FK
+  }
+  menu_item_components {
+    int menu_item_id PK, FK
+    int stock_item_id PK, FK
+    int quantity_per_item "in the stock unit"
+  }
+  stock_items {
+    int id PK
+    text name "Mangoes, Primus 72cl"
+    text base_unit "piece, g, ml"
+    text pack_name "crate, bottle, kg"
+    int pack_size "24, 750, 1000"
+    int quantity_on_hand "only via movements"
+    int reorder_level
+  }
+  stock_movements {
+    int id PK
+    int stock_item_id FK
+    text movement_type "opening, purchase, adjustment, waste, sale, sale_reversal"
+    int quantity_delta "+ in, - out"
+    int order_item_id FK "for sales"
+    int created_by FK
+  }
+  notifications {
+    int id PK
+    text kind "low_stock, out_of_stock, menu_item_sold_out"
+    text for_permission FK "who sees it"
+    text resolved_at
+  }

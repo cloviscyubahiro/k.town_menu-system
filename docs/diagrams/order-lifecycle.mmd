@@ -1,0 +1,20 @@
+stateDiagram-v2
+  direction LR
+  [*] --> placed: guest orders, or reception types it in
+  placed --> confirmed: reception accepts
+  placed --> cancelled: guest or reception
+  confirmed --> preparing: kitchen starts
+  confirmed --> ready: kitchen, quick item
+  preparing --> confirmed: kitchen, undo
+  preparing --> ready: kitchen
+  ready --> preparing: kitchen, not ready yet
+  ready --> served: reception
+  confirmed --> cancelled: reception, stock goes back
+  preparing --> cancelled: reception
+  ready --> cancelled: reception
+  served --> [*]
+  cancelled --> [*]
+  note right of confirmed
+    the database takes the recipe
+    out of stock and issues the invoice
+  end note
